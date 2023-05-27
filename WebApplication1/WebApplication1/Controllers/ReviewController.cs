@@ -47,7 +47,7 @@ namespace WebApplication1.Controllers
             return await _reviewService.GetReviewsByUserId(userIdGuid);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         [HttpPost]
         public async Task<Review> CreateReview(ReviewForPost reviewForPost)
         {
