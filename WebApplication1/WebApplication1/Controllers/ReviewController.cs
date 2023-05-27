@@ -47,7 +47,7 @@ namespace WebApplication1.Controllers
             return await _reviewService.GetReviewsByUserId(userIdGuid);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<Review> CreateReview(ReviewForPost reviewForPost)
         {
@@ -57,12 +57,15 @@ namespace WebApplication1.Controllers
 
             return await _reviewService.CreateReview(reviewForPost);
         }
+
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task UpdateReview(Guid id, ReviewForUpdate reviewForUpdate)
         {
             await _reviewService.UpdateReview(id, reviewForUpdate);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete]
         public async Task DeleteReview(Guid id)
         {

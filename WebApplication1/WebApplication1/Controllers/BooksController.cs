@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using System.Data;
+using Microsoft.AspNetCore.Mvc;
 using WebApplication1.DTO.Book;
 using WebApplication1.Models;
 using WebApplication1.Services.BookService;
@@ -31,18 +33,21 @@ namespace WebApplication1.Controllers
             return await _bookService.GetBook(id);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<Book> CreateBook([FromBody] BookForUpdate bookForUpdate)
         {
             return await _bookService.CreateBook(bookForUpdate);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task UpdateBook(Guid id, [FromBody] BookForUpdate bookForUpdate)
         {
             await _bookService.UpdateBook(id, bookForUpdate);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task DeleteBook(Guid id)
         {

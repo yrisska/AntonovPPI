@@ -36,6 +36,7 @@ namespace WebApplication1.Controllers
             return await _authService.SignIn(userForLogin);
 
         }
+
         [HttpPost("register")]
         public async Task<AuthResponse> SignГз(UserForRegistration userForRegistration)
         {

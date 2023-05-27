@@ -139,6 +139,10 @@ namespace WebApplication1.Services.BookService
         {
             var book = bookForUpdate.ToModel();
 
+            book.Publisher = await _publisherService.GetPublisher(bookForUpdate.PublisherId) ?? throw new KeyNotFoundException("No publisher with such id");
+
+            book.Id = Guid.NewGuid();
+
             _bookRepository.Add(book);
 
             return await Task.FromResult(book);

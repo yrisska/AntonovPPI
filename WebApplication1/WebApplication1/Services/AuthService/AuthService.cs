@@ -37,6 +37,7 @@ namespace WebApplication1.Services.AuthService
                     Birthday = new DateOnly(1999, 4, 16),
                     Email = "jane.doe@example.com",
                     LastAuthDate = DateOnly.FromDateTime(DateTime.Now),
+                    IsAdmin = true,
                 },
                 new User
                 {
@@ -186,8 +187,13 @@ namespace WebApplication1.Services.AuthService
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Name, value: $"{user.FirstName} {user.LastName}")
+                new Claim(ClaimTypes.Name, value: $"{user.FirstName} {user.LastName}"),
             };
+
+            if (user.IsAdmin)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+            }
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(_configuration["secretKey"]);

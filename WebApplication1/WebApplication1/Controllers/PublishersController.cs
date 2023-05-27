@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebApplication1.DTO.Book;
 using WebApplication1.Models;
 using WebApplication1.Services.PublisherService;
@@ -31,18 +32,21 @@ namespace WebApplication1.Controllers
             return await _publisherService.GetPublisher(id);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<Publisher> CreatePublisher([FromBody] PublisherForUpdate publisherForUpdate)
         {
             return await _publisherService.CreatePublisher(publisherForUpdate);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task UpdatePublisher(Guid id, [FromBody] PublisherForUpdate publisherForUpdate)
         {
             await _publisherService.UpdatePublisher(id, publisherForUpdate);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task DeletePublisher(Guid id)
         {

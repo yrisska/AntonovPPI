@@ -29,7 +29,7 @@ namespace WebApplication1.Middlewares
 
                 switch (ex)
                 {
-                    case ValidationException _:
+                    case KeyNotFoundException _:
                         context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
                     default:

@@ -23,5 +23,9 @@ namespace WebApplication1.Models
         public int FailedAuthCount { get; set; } = 0;
         public DateOnly LastAuthDate { get; set; }
 
+
+        [JsonIgnore]
+        public bool IsAdmin { get; set; } = false;
+
     }
 }
