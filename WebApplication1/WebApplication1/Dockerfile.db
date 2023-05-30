@@ -1,0 +1,8 @@
+FROM alpine:latest
+
+RUN apk update && apk add sqlite
+
+WORKDIR /app
+COPY mydatabase.db /app
+
+CMD ["sqlite3", "-loop", "/app/mydatabase.db"]

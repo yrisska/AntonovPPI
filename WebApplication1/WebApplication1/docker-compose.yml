@@ -1,0 +1,30 @@
+version: '3'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 32780:80
+    restart: always
+    networks:
+      - mynetwork
+    depends_on:
+      - db
+    container_name: api-container
+
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+    restart: always
+    volumes:
+      - ./mydatabase.db:/app/mydatabase.db
+    networks:
+      - mynetwork
+    container_name: db-container
+
+networks:
+  mynetwork:
+
+

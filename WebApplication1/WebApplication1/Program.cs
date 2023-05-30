@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using WebApplication1.Common.Converters;
 using WebApplication1.Middlewares;
+using WebApplication1.Persistance;
 using WebApplication1.Services.AuthService;
 using WebApplication1.Services.BookService;
 using WebApplication1.Services.PasswordService;
@@ -26,15 +27,18 @@ builder.Services.AddControllers()
     });
 builder.Services.AddEndpointsApiExplorer();
 
+builder.Services.AddDbContext<AppDbContext>();
+
 builder.Services.AddSingleton<IPublisherService, PublisherService>();// Singleton for services with data we want to preserve
 builder.Services.AddSingleton<IBookService, BookService>();// Singleton for services with data we want to preserve
 builder.Services.AddSingleton<IPasswordService, PasswordService>();// We want to use this inside singleton service
-builder.Services.AddSingleton<IAuthService, AuthService>();// Singleton for services with data we want to preserve
-builder.Services.AddSingleton<IReviewService, ReviewService>();// Singleton for services with data we want to preserve
+builder.Services.AddScoped<IAuthService, AuthService>();// Now we can move to scoped as data in DB
+//builder.Services.AddSingleton<IReviewService, ReviewService>(); --> cant consume scoped from singleton, removed for lab task
 
 builder.Services.AddScoped<IIntegerService, IntegerService>(); // No need to preserve data
 builder.Services.AddScoped<ITextService, TextService>();
 builder.Services.AddScoped<IExcelService, ExcelService>();
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
